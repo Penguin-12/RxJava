@@ -55,4 +55,7 @@ dependencies {
     //retrofit with rxJava
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    //swipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+
 }

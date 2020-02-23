@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.rxjava_retrofit_room_mvvm_example.Models.Value;
 import com.example.rxjava_retrofit_room_mvvm_example.R;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     ViewModel viewModel;
     List<Value> jokeList;
     CustomAdapter customAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onDestroy() {
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("Chuck Norris Jokes");
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
         jokeList = new ArrayList<>();
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         viewModel.getAllJokes().observe(this, new Observer<List<Value>>() {
@@ -44,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         });
         initRecylerView();
         viewModel.getJokesFromInternetAndSaveIntoDB();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.getJokesFromInternetAndSaveIntoDB();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 

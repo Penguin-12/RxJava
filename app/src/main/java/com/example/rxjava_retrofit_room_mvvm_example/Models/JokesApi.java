@@ -7,7 +7,7 @@ public interface JokesApi {
 
     String BASE_URl = "http://api.icndb.com/jokes/";
 
-    @GET("random/100")
+    @GET("random/20")
     Observable<Joke> getJoke();
 
 }
